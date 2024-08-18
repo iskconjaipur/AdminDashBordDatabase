@@ -94,6 +94,7 @@ CREATE TABLE feedback (
 -- Create the queries table
 CREATE TABLE queries (
     query_id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
     contact VARCHAR(15) NOT NULL,
     query_text TEXT NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -107,6 +108,39 @@ CREATE TABLE otp (
     expiration DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+INSERT INTO roles (role_name) VALUES 
+('admin'),
+('user');
+
+INSERT INTO users (user_id, first_name, last_name, email, contact, address, pan_card, is_verified, role_id, created_at)
+VALUES 
+('DBD564B5B226', 'ISKCON', 'Jaipur', 'iskconjaipur@example.com', '9090909090', 'ISKCON Jaipur', 'ABCDE1234F', TRUE, 1, '2024-08-18 10:43:45');
+
+INSERT INTO user_auth (user_id, password_hash)
+VALUES 
+('DBD564B5B226', '$2b$10$xkDeBsXbKo0xRbd6239Jvedo7CJ9cNIcupFN9rVg1Nq5K5fP2K.RO');
+
+INSERT INTO donation_purposes (purpose_name) VALUES 
+('Nitya Seva - Mangala Aarti'),
+('Nitya Seva - Rajbhog Aarti'),
+('Nitya Seva - Sandhya Aarti'),
+('Nitya Seva - Shayan Aarti');
+
+INSERT INTO donation_purposes (purpose_name) VALUES 
+('Special Pooja - 108 Naam Seva'),
+('Special Pooja - Giriraj Panchamrita Abhisheka'),
+('Special Pooja - Balarama Kavach Pooja'),
+('Special Pooja - Priti Bhog'),
+('Special Pooja - Gau Pooja');
+
+INSERT INTO donation_purposes (purpose_name) VALUES 
+('Festival - Balarama Poornima'),
+('Festival - Janmasthami'),
+('Festival - Radhasthami'),
+('Festival - Gaur Poornima'),
+('Festival - Rath Yatra');
+
 
 
 DELIMITER //
@@ -154,4 +188,3 @@ BEGIN
 END //
 
 DELIMITER ;
-
