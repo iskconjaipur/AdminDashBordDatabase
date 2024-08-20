@@ -100,6 +100,15 @@ CREATE TABLE queries (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create the yajna_sanskar table
+CREATE TABLE yajna_sanskar (
+    yajna_id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    yajna_details TEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create the otp table
 CREATE TABLE otp (
     otp_id VARCHAR(100) PRIMARY KEY,
