@@ -10,7 +10,7 @@ CREATE TABLE roles (
     role_name VARCHAR(50) UNIQUE NOT NULL
 );
 
--- Create the users table
+-- Create the users table with isDeleted column
 CREATE TABLE users (
     user_id VARCHAR(100) PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -20,6 +20,7 @@ CREATE TABLE users (
     address TEXT NOT NULL,
     pan_card VARCHAR(10),
     is_verified BOOLEAN DEFAULT FALSE,
+    isDeleted BOOLEAN DEFAULT FALSE,
     role_id INT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (role_id) REFERENCES roles(role_id)
@@ -118,40 +119,39 @@ CREATE TABLE otp (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- Insert initial roles
 INSERT INTO roles (role_name) VALUES 
 ('admin'),
 ('user');
 
+-- Insert initial admin user
 INSERT INTO users (user_id, first_name, last_name, email, contact, address, pan_card, is_verified, role_id, created_at)
 VALUES 
 ('DBD564B5B226', 'ISKCON', 'Jaipur', 'iskconjaipur@example.com', '9090909090', 'ISKCON Jaipur', 'ABCDE1234F', TRUE, 1, '2024-08-18 10:43:45');
 
+-- Insert user authentication for admin
 INSERT INTO user_auth (user_id, password_hash)
 VALUES 
 ('DBD564B5B226', '$2b$10$xkDeBsXbKo0xRbd6239Jvedo7CJ9cNIcupFN9rVg1Nq5K5fP2K.RO');
 
+-- Insert donation purposes
 INSERT INTO donation_purposes (purpose_name) VALUES 
 ('Nitya Seva - Mangala Aarti'),
 ('Nitya Seva - Rajbhog Aarti'),
 ('Nitya Seva - Sandhya Aarti'),
-('Nitya Seva - Shayan Aarti');
-
-INSERT INTO donation_purposes (purpose_name) VALUES 
+('Nitya Seva - Shayan Aarti'),
 ('Special Pooja - 108 Naam Seva'),
 ('Special Pooja - Giriraj Panchamrita Abhisheka'),
 ('Special Pooja - Balarama Kavach Pooja'),
 ('Special Pooja - Priti Bhog'),
-('Special Pooja - Gau Pooja');
-
-INSERT INTO donation_purposes (purpose_name) VALUES 
+('Special Pooja - Gau Pooja'),
 ('Festival - Balarama Poornima'),
 ('Festival - Janmasthami'),
 ('Festival - Radhasthami'),
 ('Festival - Gaur Poornima'),
 ('Festival - Rath Yatra');
 
-
-
+-- Stored Procedure to Get Donations and Bookings Report
 DELIMITER //
 
 CREATE PROCEDURE GetDonationsAndBookingsReport(IN startDate DATETIME, IN endDate DATETIME)
@@ -164,7 +164,8 @@ BEGIN
     -- Get the number of users who registered within the date range
     SELECT COUNT(*) INTO userCount
     FROM users
-    WHERE created_at BETWEEN startDate AND endDate;
+    WHERE created_at BETWEEN startDate AND endDate
+      AND isDeleted = FALSE;
 
     -- Get the number of bookings within the date range
     SELECT COUNT(*) INTO bookingCount
@@ -191,6 +192,7 @@ BEGIN
     FROM users u
     LEFT JOIN donations d ON u.user_id = d.referral_id
     WHERE d.donation_time BETWEEN startDate AND endDate
+      AND u.isDeleted = FALSE
     GROUP BY u.user_id
     ORDER BY 'Total Referral Donations' DESC;
 
