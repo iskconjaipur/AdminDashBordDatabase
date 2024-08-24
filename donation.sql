@@ -113,10 +113,9 @@ CREATE TABLE yajna_sanskar (
 -- Create the otp table
 CREATE TABLE otp (
     otp_id VARCHAR(100) PRIMARY KEY,
-    user_id VARCHAR(100),
+    contact VARCHAR(15) UNIQUE NOT NULL,
     otp_code VARCHAR(6) NOT NULL,
-    expiration DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    expiration DATETIME NOT NULL
 );
 
 -- Insert initial roles
