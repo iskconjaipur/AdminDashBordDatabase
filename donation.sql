@@ -69,7 +69,7 @@ CREATE TABLE donations (
     FOREIGN KEY (referral_id) REFERENCES users(user_id)
 );
 
--- Create the bookings table
+-- Create the bookings table with additional columns
 CREATE TABLE bookings (
     booking_id VARCHAR(100) PRIMARY KEY,
     donation_id VARCHAR(100),
@@ -78,6 +78,9 @@ CREATE TABLE bookings (
     booking_time DATETIME NOT NULL,
     is_completed BOOLEAN DEFAULT FALSE,
     completion_time DATETIME,
+    delivery_address VARCHAR(100),  
+    pray_for VARCHAR(255),    
+    youtube_link VARCHAR(255),
     FOREIGN KEY (donation_id) REFERENCES donations(donation_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (slot_id) REFERENCES slots(slot_id)
@@ -149,6 +152,23 @@ INSERT INTO donation_purposes (purpose_name) VALUES
 ('Festival - Radhasthami'),
 ('Festival - Gaur Poornima'),
 ('Festival - Rath Yatra');
+
+-- Insert slots for each donation purpose with the same time range (4:30 AM to 9:00 PM)
+INSERT INTO slots (purpose_id, start_time, end_time) VALUES
+(1, '04:30:00', '21:00:00'),  -- Nitya Seva - Mangala Aarti
+(2, '04:30:00', '21:00:00'),  -- Nitya Seva - Rajbhog Aarti
+(3, '04:30:00', '21:00:00'),  -- Nitya Seva - Sandhya Aarti
+(4, '04:30:00', '21:00:00'),  -- Nitya Seva - Shayan Aarti
+(5, '04:30:00', '21:00:00'),  -- Special Pooja - 108 Naam Seva
+(6, '04:30:00', '21:00:00'),  -- Special Pooja - Giriraj Panchamrita Abhisheka
+(7, '04:30:00', '21:00:00'),  -- Special Pooja - Balarama Kavach Pooja
+(8, '04:30:00', '21:00:00'),  -- Special Pooja - Priti Bhog
+(9, '04:30:00', '21:00:00'),  -- Special Pooja - Gau Pooja
+(10, '04:30:00', '21:00:00'), -- Festival - Balarama Poornima
+(11, '04:30:00', '21:00:00'), -- Festival - Janmasthami
+(12, '04:30:00', '21:00:00'), -- Festival - Radhasthami
+(13, '04:30:00', '21:00:00'), -- Festival - Gaur Poornima
+(14, '04:30:00', '21:00:00'); -- Festival - Rath Yatra
 
 -- Stored Procedure to Get Donations and Bookings Report
 DELIMITER //
