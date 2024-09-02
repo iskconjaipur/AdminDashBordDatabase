@@ -138,8 +138,8 @@ VALUES
 
 -- Insert donation purposes
 INSERT INTO donation_purposes (purpose_name) VALUES 
-('Nitya Seva - Mangala Aarti'),
-('Nitya Seva - Rajbhog Aarti'),
+('All Aarti Of The Day'),
+('All Bhog Offering'),
 ('Nitya Seva - Sandhya Aarti'),
 ('Nitya Seva - Shayan Aarti'),
 ('Special Pooja - 108 Naam Seva'),
@@ -155,8 +155,8 @@ INSERT INTO donation_purposes (purpose_name) VALUES
 
 -- Insert slots for each donation purpose with the same time range (4:30 AM to 9:00 PM)
 INSERT INTO slots (purpose_id, start_time, end_time) VALUES
-(1, '04:30:00', '21:00:00'),  -- Nitya Seva - Mangala Aarti
-(2, '04:30:00', '21:00:00'),  -- Nitya Seva - Rajbhog Aarti
+(1, '04:30:00', '21:00:00'),  -- All Aarti Of The Day
+(2, '04:30:00', '21:00:00'),  -- All Bhog Offering
 (3, '04:30:00', '21:00:00'),  -- Nitya Seva - Sandhya Aarti
 (4, '04:30:00', '21:00:00'),  -- Nitya Seva - Shayan Aarti
 (5, '04:30:00', '21:00:00'),  -- Special Pooja - 108 Naam Seva
