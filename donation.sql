@@ -147,18 +147,6 @@ CREATE TABLE yajna_sanskar (
 CREATE INDEX idx_yajna_sanskar_contact ON yajna_sanskar(contact);
 CREATE INDEX idx_yajna_sanskar_created_at ON yajna_sanskar(created_at);
 
--- Create the otp table
-CREATE TABLE otp (
-    otp_id VARCHAR(100) PRIMARY KEY,
-    contact VARCHAR(15) UNIQUE NOT NULL,
-    otp_code VARCHAR(6) NOT NULL,
-    expiration DATETIME NOT NULL
-);
-
--- Add indexes to the otp table
-CREATE INDEX idx_otp_contact ON otp(contact);
-CREATE INDEX idx_otp_expiration ON otp(expiration);
-
 -- Insert initial roles
 INSERT INTO roles (role_name) VALUES 
 ('admin'),
