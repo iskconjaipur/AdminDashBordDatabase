@@ -26,6 +26,11 @@ CREATE TABLE users (
     FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
+-- Add indexes to the users table
+CREATE INDEX idx_users_contact ON users(contact);
+CREATE INDEX idx_users_isDeleted ON users(isDeleted);
+CREATE INDEX idx_users_created_at ON users(created_at);
+
 -- Create the user authentication table
 CREATE TABLE user_auth (
     user_id VARCHAR(100) PRIMARY KEY,
@@ -39,6 +44,9 @@ CREATE TABLE user_tokens (
     token VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+-- Add an index to the user tokens table
+CREATE INDEX idx_user_tokens_user_id ON user_tokens(user_id);
 
 -- Create the donation purposes table
 CREATE TABLE donation_purposes (
@@ -55,6 +63,9 @@ CREATE TABLE slots (
     FOREIGN KEY (purpose_id) REFERENCES donation_purposes(purpose_id)
 );
 
+-- Add indexes to the slots table
+CREATE INDEX idx_slots_purpose_id ON slots(purpose_id);
+
 -- Create the donations table
 CREATE TABLE donations (
     donation_id VARCHAR(100) PRIMARY KEY,
@@ -68,6 +79,12 @@ CREATE TABLE donations (
     FOREIGN KEY (purpose_id) REFERENCES donation_purposes(purpose_id),
     FOREIGN KEY (referral_id) REFERENCES users(user_id)
 );
+
+-- Add indexes to the donations table
+CREATE INDEX idx_donations_user_id ON donations(user_id);
+CREATE INDEX idx_donations_purpose_id ON donations(purpose_id);
+CREATE INDEX idx_donations_referral_id ON donations(referral_id);
+CREATE INDEX idx_donations_donation_time ON donations(donation_time);
 
 -- Create the bookings table with additional columns
 CREATE TABLE bookings (
@@ -86,6 +103,12 @@ CREATE TABLE bookings (
     FOREIGN KEY (slot_id) REFERENCES slots(slot_id)
 );
 
+-- Add indexes to the bookings table
+CREATE INDEX idx_bookings_donation_id ON bookings(donation_id);
+CREATE INDEX idx_bookings_user_id ON bookings(user_id);
+CREATE INDEX idx_bookings_slot_id ON bookings(slot_id);
+CREATE INDEX idx_bookings_booking_time ON bookings(booking_time);
+
 -- Create the feedback table
 CREATE TABLE feedback (
     feedback_id VARCHAR(100) PRIMARY KEY,
@@ -94,6 +117,9 @@ CREATE TABLE feedback (
     comments TEXT,
     FOREIGN KEY (booking_id) REFERENCES bookings(booking_id)
 );
+
+-- Add an index to the feedback table
+CREATE INDEX idx_feedback_booking_id ON feedback(booking_id);
 
 -- Create the queries table
 CREATE TABLE queries (
@@ -104,6 +130,10 @@ CREATE TABLE queries (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Add an index to the queries table
+CREATE INDEX idx_queries_contact ON queries(contact);
+CREATE INDEX idx_queries_created_at ON queries(created_at);
+
 -- Create the yajna_sanskar table
 CREATE TABLE yajna_sanskar (
     yajna_id VARCHAR(100) PRIMARY KEY,
@@ -113,6 +143,10 @@ CREATE TABLE yajna_sanskar (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Add an index to the yajna_sanskar table
+CREATE INDEX idx_yajna_sanskar_contact ON yajna_sanskar(contact);
+CREATE INDEX idx_yajna_sanskar_created_at ON yajna_sanskar(created_at);
+
 -- Create the otp table
 CREATE TABLE otp (
     otp_id VARCHAR(100) PRIMARY KEY,
@@ -120,6 +154,10 @@ CREATE TABLE otp (
     otp_code VARCHAR(6) NOT NULL,
     expiration DATETIME NOT NULL
 );
+
+-- Add indexes to the otp table
+CREATE INDEX idx_otp_contact ON otp(contact);
+CREATE INDEX idx_otp_expiration ON otp(expiration);
 
 -- Insert initial roles
 INSERT INTO roles (role_name) VALUES 
