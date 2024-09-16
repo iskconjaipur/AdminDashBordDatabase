@@ -205,7 +205,8 @@ BEGIN
     DECLARE userCount INT;
     DECLARE bookingCount INT;
     DECLARE totalDonation DECIMAL(10, 2);
-    
+    DECLARE yajnaCount INT;
+
     -- Get the number of users who registered within the date range
     SELECT COUNT(*) INTO userCount
     FROM users
@@ -222,11 +223,17 @@ BEGIN
     FROM donations
     WHERE donation_time BETWEEN startDate AND endDate;
 
+    -- Get the total number of yajna sanskar entries within the date range
+    SELECT COUNT(*) INTO yajnaCount
+    FROM yajna_sanskar
+    WHERE created_at BETWEEN startDate AND endDate;
+
     -- Output the results
     SELECT 
         userCount AS 'Number of Users Registered',
         bookingCount AS 'Number of Bookings',
-        totalDonation AS 'Total Donation Amount';
+        totalDonation AS 'Total Donation Amount',
+        yajnaCount AS 'Number of Yajna Sanskar Entries';
 
     -- Get the referral statistics
     SELECT 
