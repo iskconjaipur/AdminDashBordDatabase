@@ -98,6 +98,7 @@ CREATE TABLE bookings (
     delivery_address VARCHAR(100),  
     pray_for VARCHAR(255),    
     youtube_link VARCHAR(255),
+	is_prasadam_delivered BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (donation_id) REFERENCES donations(donation_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (slot_id) REFERENCES slots(slot_id)
