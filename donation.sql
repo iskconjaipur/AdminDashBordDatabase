@@ -85,7 +85,7 @@ CREATE TABLE donations (
     referral_id VARCHAR(100),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (purpose_id) REFERENCES donation_purposes(purpose_id),
-    FOREIGN KEY (referral_id) REFERENCES users(user_id)
+    FOREIGN KEY (referral_id) REFERENCES referrals(referral_id)
 );
 
 -- Add indexes to the donations table
@@ -246,15 +246,14 @@ BEGIN
 
     -- Get the referral statistics
     SELECT 
-        u.user_id,
-        CONCAT(u.first_name, ' ', u.last_name) AS 'User Name',
+        r.referral_id,
+        r.name AS 'Referral Name',
         COUNT(d.referral_id) AS 'Number of Referrals',
         IFNULL(SUM(d.amount), 0) AS 'Total Referral Donations'
-    FROM users u
-    LEFT JOIN donations d ON u.user_id = d.referral_id
+    FROM referrals r
+    LEFT JOIN donations d ON r.referral_id = d.referral_id
     WHERE d.donation_time BETWEEN startDate AND endDate
-      AND u.isDeleted = FALSE
-    GROUP BY u.user_id
+    GROUP BY r.referral_id
     ORDER BY 'Total Referral Donations' DESC;
 
 END //
