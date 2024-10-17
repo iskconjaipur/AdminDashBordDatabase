@@ -10,6 +10,14 @@ CREATE TABLE roles (
     role_name VARCHAR(50) UNIQUE NOT NULL
 );
 
+-- Create the referrals table
+CREATE TABLE referrals (
+    referral_id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    contact VARCHAR(15) NOT NULL,
+    referral_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create the users table with isDeleted column
 CREATE TABLE users (
     user_id VARCHAR(100) PRIMARY KEY,
