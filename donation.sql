@@ -15,6 +15,7 @@ CREATE TABLE referrals (
     referral_id VARCHAR(100) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     contact VARCHAR(15) NOT NULL,
+	isDeleted BOOLEAN DEFAULT FALSE,
     referral_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -253,6 +254,7 @@ BEGIN
     FROM referrals r
     LEFT JOIN donations d ON r.referral_id = d.referral_id
     WHERE d.donation_time BETWEEN startDate AND endDate
+      AND r.isDeleted = FALSE
     GROUP BY r.referral_id
     ORDER BY 'Total Referral Donations' DESC;
 
