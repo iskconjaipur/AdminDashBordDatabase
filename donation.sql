@@ -248,7 +248,7 @@ BEGIN
     -- Get the referral statistics
     SELECT 
         r.referral_id,
-        r.name AS 'Referral Name',
+        r.name AS 'User Name',
         COUNT(d.referral_id) AS 'Number of Referrals',
         IFNULL(SUM(d.amount), 0) AS 'Total Referral Donations'
     FROM referrals r
